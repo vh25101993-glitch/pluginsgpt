@@ -1,0 +1,26 @@
+name: temporary chemistry image pack builder v3 fast
+on:
+  push:
+    branches: [tmp-chem-images-v1992-20260829]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet pillow requests
+      - run: rm -rf .chem-images/out-v3 && python .chem-images/fetch_images_v3_fast.py
+      - run: |
+          cd .chem-images
+          zip -9 -r chem-image-pack-v3.zip out-v3 >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chem-image-pack-v3
+          path: .chem-images/chem-image-pack-v3.zip
+          compression-level: 0
+          retention-days: 1
