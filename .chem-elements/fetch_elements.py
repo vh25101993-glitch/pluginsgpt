@@ -6,7 +6,7 @@ import requests
 from PIL import Image,ImageOps,ImageDraw,ImageFont
 BASE=Path(__file__).resolve().parent; OUT=BASE/'out'; IMG=OUT/'substances'; IMG.mkdir(parents=True,exist_ok=True)
 URL='https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json'
-MAP={'Na':'Sodium','K':'Potassium','Ca':'Calcium','Mg':'Magnesium','Al':'Aluminum','Zn':'Zinc','Fe':'Iron','Cu':'Copper','Ag':'Silver','Ba':'Barium','Si':'Silicon','H2':'Hydrogen','O2':'Oxygen','F2':'Fluorine','Cl2':'Chlorine','Br2':'Bromine','S':'Sulfur','C':'Carbon','N2':'Nitrogen','P':'Phosphorus'}
+MAP={'Na':'Sodium','K':'Potassium','Ca':'Calcium','Mg':'Magnesium','Al':'Aluminium','Zn':'Zinc','Fe':'Iron','Cu':'Copper','Ag':'Silver','Ba':'Barium','Si':'Silicon','H2':'Hydrogen','O2':'Oxygen','F2':'Fluorine','Cl2':'Chlorine','Br2':'Bromine','S':'Sulfur','C':'Carbon','N2':'Nitrogen','P':'Phosphorus'}
 S=requests.Session(); S.headers['User-Agent']='HoaHocAlchemy/1.9.93 educational element image curator'
 def get(u):
   last=None
@@ -28,7 +28,6 @@ for i,(sid,name) in enumerate(MAP.items(),1):
   man[sid]={'file':'substances/'+fn,'status':'curated_element_photo','representation':'element_sample','source_page':source,'original_url':u,'author':author,'license':lic,'license_url':'https://creativecommons.org/licenses/by/3.0/' if lic=='CC BY 3.0' else '', 'commons_title':im.get('title',''),'attribution':attr,'size':list(pic.size)}
   time.sleep(.08)
 (OUT/'element-images.json').write_text(json.dumps(man,ensure_ascii=False,indent=2),'utf-8')
-# visual sheet
 try:
   font=ImageFont.load_default(); cw,ch=220,165; cols=5; rows=4; sheet=Image.new('RGB',(cols*cw,rows*ch),(245,245,245)); d=ImageDraw.Draw(sheet)
   for j,(sid,name) in enumerate(MAP.items()):
